@@ -8,52 +8,87 @@ using System.IO;
 namespace HackerRank
 {
     using System.Diagnostics;
-    class Solution
+    using Vertex = System.Int32;
+    public abstract class Graph
     {
-        static string[] identifier = { "add", "find" }; // add name, find partial
+        public abstract void SetVertexSize(uint n);
+        public abstract void AddEdge(Vertex from, Vertex to);
+        public virtual bool HasEdge() { return false; }
+        public virtual uint VertexSize() { return 0; }
+        public virtual uint EdgeSize() { return 0; }
+        public abstract uint OutDegree(Vertex v);
+        public abstract uint InDegree(Vertex v);
+    }
 
-        static System.IO.FileStream GetInput()
+    public class GraphMatrixBase : Graph
+    {
+        // inherited abstract methods
+        public override void SetVertexSize(uint n)
         {
-            System.IO.FileStream fstream = new System.IO.FileStream("../Output/Output3.txt", FileMode.Open, FileAccess.Read);
-            return fstream;
+
         }
 
-        static string outFileName = "..\\..\\Output\\Output3.txt";
-        static string inFileName = "..\\..\\Input\\test3.txt";
+        public override void AddEdge(Vertex from, Vertex to)
+        {
+            
+        }
+
+        public override uint OutDegree(Vertex v)
+        {
+            return 0;
+        }
+
+        public override uint InDegree(Vertex v)
+        {
+            return 0;
+        }
+
+        //IEnumerator<> Begin(Vertex x);
+        //IEnumerator<> End(Vertex x);
+
+    }
+
+    public class GraphListBase : Graph
+    {
+        // inherited abstract methods
+        public override void SetVertexSize(uint n)
+        {
+
+        }
+
+        public override void AddEdge(Vertex from, Vertex to)
+        {
+
+        }
+
+        public override uint OutDegree(Vertex v)
+        {
+            return 0;
+        }
+
+        public override uint InDegree(Vertex v)
+        {
+            return 0;
+        }
+
+
+    }
+
+    public class Solution
+    {
+        
+
+        // The amount of lines read by the program ( <= 10^4 )
+        public static int P { get; set; }
 
         static void Main(string[] args)
-        {
-            StreamReader sreader = new StreamReader(inFileName);
-            
-            Dictionary<string, int> dictionary = new Dictionary<string, int>();
+        {            
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            int totalLines = Int32.Parse(sreader.ReadLine());
 
-            while(!sreader.EndOfStream)
-            {
-                string[] in_ = sreader.ReadLine().Split(' ');
-                if(in_[0][0] == 'a') // add
-                {
-                    for(int j = 1; j <= in_[1].Length; ++j)
-                    {
-                        string sub = in_[1].Substring(0, j);
-
-                        if (!dictionary.ContainsKey(sub))
-                            dictionary.Add(sub, 1);
-                        else
-                            dictionary[sub] += 1;
-                    }
-                }
-                else // find
-                {
-                    if (!dictionary.ContainsKey(in_[1]))
-                        Console.WriteLine('0');
-                    else
-                        Console.WriteLine(dictionary[in_[1]]);
-
-                }
-            }
+            Console.WriteLine("Testing MatrixUtility.MyType:\n");
+            MyType myTypeTest = null;
+            Console.WriteLine(myTypeTest.data_float ?? 23425);
 
             stopwatch.Stop();
             Console.WriteLine($"Time: {stopwatch.Elapsed}");

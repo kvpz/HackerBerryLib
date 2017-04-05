@@ -5,6 +5,9 @@ using System.IO;
 
 namespace HackerLibrary
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Contacts
     {
         const string SampleInputFile = "..\\..\\Input\\test3.txt";
