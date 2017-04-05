@@ -10,6 +10,11 @@ namespace HackerLibrary
         const string SampleInputFile = "..\\..\\Input\\test3.txt";
         private const string SampleOutputFile = "..\\..\\Output\\Output3.txt";
 
+        /// <summary>
+        /// Add a string to the dictionary along with the amount of occurences (or, really, the total attempts of adding).
+        /// </summary>
+        /// <param name="dictionary"></param>
+        /// <param name="input"></param>
         public void Add(Dictionary<string, int> dictionary, string input)
         {
             for(int j = 1; j < input.Length; ++j)
@@ -23,6 +28,12 @@ namespace HackerLibrary
             }
         }
 
+        /// <summary>
+        /// Find a word in the dictionary. Return a KeyValuePair.
+        /// </summary>
+        /// <param name="dictionary"></param>
+        /// <param name="searchWord"></param>
+        /// <returns></returns>
         public KeyValuePair<string, int>? Find(Dictionary<string, int> dictionary, string searchWord)
         {
             if(dictionary.ContainsKey(searchWord))
