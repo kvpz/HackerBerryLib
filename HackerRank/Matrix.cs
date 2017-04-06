@@ -138,7 +138,7 @@ namespace HackerRank
         /// <param name="M"></param>
         /// <param name="X"></param>
         /// <returns></returns>
-        public static List<MyType> operator *(Matrix<T> M, List<T> X)
+        public static List<DataType> operator *(Matrix<T> M, List<T> X)
         {
             // The number of columns of M must match number of rows (terms) in X
             if (M.NumberOfColumns() != X.Count())
@@ -148,37 +148,52 @@ namespace HackerRank
 
             int rows = M.NumberOfRows();
             int columns = X.Count();
-            List<MyType> V_result = new List<MyType>(columns);
+
+            // Resulting vector
+            List<DataType> V_result = new List<DataType>(columns);
             for(int i = 0; i < columns; ++i)
             {
                 MyGenericType<T> tempGen = new MyGenericType<T>(default(T));
-                V_result.Add(tempGen.ToMyType()); //new MyType(tempGen));
+                V_result.Add(tempGen.ToDataType()); 
             }
 
             for (int row_i = 0; row_i < rows; ++row_i)
             {
                 for (int column_j = 0; column_j < columns; ++column_j)
-                {
-                    // T is not a MyType so "as MyType" would return null
-                    //V_result[column_j] += (M.ValueAt(row_i, column_j) as MyGenericType<T>) * (X[column_j] as MyGenericType<T>);
-                    //MyGenericType<T> mij_generic = new MyGenericType<T>(M.ValueAt(row_i, column_j));
-                    //MyType mij = mij_generic.data;
-                    
-                    MyGenericType<T> forMyType = new MyGenericType<T>(X[column_j]);
-                    MyGenericType<T> forMyTypeM = new MyGenericType<T>(M.ValueAt(row_i, column_j));
-                    MyType Xi = forMyType.ToMyType();
-                    MyType Mij = forMyTypeM.ToMyType();
-                    MyType newT = Xi * Mij;
+                {                   
+                    MyGenericType<T> forDataType = new MyGenericType<T>(X[column_j]);
+                    MyGenericType<T> forDataTypeM = new MyGenericType<T>(M.ValueAt(row_i, column_j));
 
-                    V_result[column_j] += newT;
-                    //V_result[column_j] += mij * Xi;
-
+                    V_result[row_i] += (DataType)forDataType * (DataType)forDataTypeM;
                 }
             }
 
             return V_result;
         }
 
+        public static Matrix<DataType> operator + (Matrix<T> A, Matrix<T> B)
+        {
+            if (A.NumberOfRows() != B.NumberOfRows())
+                return null;
+            if (A.NumberOfColumns() != B.NumberOfColumns())
+                return null;
+
+            Matrix<DataType> result = new Matrix<DataType>();
+            int rows = A.NumberOfRows();
+            int columns = A.NumberOfColumns();
+            for(int row_i = 0; row_i < rows; ++row_i)
+            {
+                for(int column_j = 0; column_j < columns; ++column_j)
+                {
+                    MyGenericType<T> Aij = new MyGenericType<T>(A[row_i][column_j]);
+                    MyGenericType<T> Bij = new MyGenericType<T>(B[row_i][column_j]);
+
+                    result[row_i][column_j] = (DataType)Aij + (DataType)Bij;
+                }
+            }
+
+            return result;
+        }
     }
 
 

@@ -7,130 +7,79 @@ using HackerRank;
 
 namespace HackerRank
 {
-    public class TypeOperators<T> where T : MyType
+    public class DataType 
     {
-        public T data_;
-        public int data_int;
-
-        //public static TypeOperators<int> operator * (TypeOperators<T> a, TypeOperators<T> b)
-        public static MyType operator *(TypeOperators<T> a, TypeOperators<T> b)
-        {
-            return a.data_ * b.data_;
-        }
-
-        //public static T MultiplyThis(int a, int b)
-        public static int MultiplyThis(int a, int b)
-        {
-            return a * b;
-        }
-    }
-
-    public class IntOperator 
-    {
-        //public virtual int Multiply (int a, int b)
-        public static int Multiply (int a, int b)
-        {
-            return a * b;
-        }
-
-    }
-
-    public class TypeConverter
-    {
-        public static implicit operator int(TypeConverter t)
-        {
-            return 1;
-        }
-    }
-
-    public class MyType 
-    {
+        private double? data_double;
         private int? data_int;
-        private readonly double? data_double;
-        private readonly char? data_char;
-        public readonly float? data_float;
+        private char? data_char;
+        public float? data_float;
 
-        public MyType() { }
-        /*
-        public MyType(int intVar)
+        public DataType() { }
+        
+        public DataType(int intVar)
         {
             data_int = intVar;
         }
 
-        public MyType(float floatVar)
+        public DataType(float floatVar)
         {
             data_float = floatVar;
         }
-
-        public MyType(double doubleVar)
+        
+        public DataType(double doubleVar)
         {
             data_double = doubleVar;
         }
-
-        public MyType(char charVar)
+        
+        public DataType(char charVar)
         {
             data_char = charVar;
         }
-        *
-        public MyType(MyGenericType<int> g)
+
+        // implicit conversions 
+        
+        public static implicit operator DataType(char charVar)
         {
-            data_int = g.data;
+            return new DataType(charVar);
         }
-        // implicit conversions to MyType because C# doesn't provide assignment constructors
-        /*
-        public static implicit operator MyType(char charVar)
+        
+        public static implicit operator DataType(int intVar)
         {
-            return new MyType(charVar);
+            return new DataType(intVar);
         }
-        */
-        public static implicit operator MyType(int intVar)
+        
+        
+        public static implicit operator DataType(float floatVar)
         {
-            MyType temp = new MyType();
-            temp.data_int = intVar;
-            return temp;
-            //return new MyType(intVar);
+            return new DataType(floatVar);
         }
-        /*
-        public static implicit operator MyType(float floatVar)
+        
+        public static implicit operator DataType(double doubleVar)
         {
-            return new MyType(floatVar);
+            return new DataType(doubleVar);
         }
 
-        public static implicit operator MyType(double doubleVar)
-        {
-            return new MyType(doubleVar);
-        }
-
-        public static implicit operator MyType(MyGenericType<int> g)
-        {
-            return new MyType(g.data);
-        }
-        */
-        public static implicit operator int?(MyType t)
-        {
-            if(t == null)
-            {
-                t = new MyType();
-                return null;
-            }
-            return t.data_int;
-        }
-
-        public static implicit operator float?(MyType t)
-        {
-            return t.data_float;
-        }
-
-        public static implicit operator double?(MyType t)
+        public static implicit operator double? (DataType t)
         {
             return t.data_double;
         }
 
-        public static implicit operator char?(MyType t)
+        public static implicit operator int? (DataType t)
+        {
+            return t.data_int;
+        }
+        
+        
+        public static implicit operator float?(DataType t)
+        {
+            return t.data_float;
+        }
+        
+        public static implicit operator char?(DataType t)
         {
             return t.data_char;
         }
-
+        
 
         public override string ToString()
         {
@@ -145,97 +94,86 @@ namespace HackerRank
             return null;
         }
 
+        public static DataType operator*(DataType a, DataType b)
+        {
+            if (a.data_int != null && b.data_int != null)
+                return a.data_int * b.data_int;
+            if (a.data_double != null && b.data_double != null)
+                return a.data_double * b.data_double;
+            if (a.data_float != null && b.data_float != null)
+                return a.data_float * b.data_float;
+            return 0;
+        }
+
+        public static DataType operator /(DataType a, DataType b)
+        {
+            if (a.data_int != null && b.data_int != null && b.data_int > 0)
+                return a.data_int / b.data_int;
+            if (a.data_double != null && b.data_double != null && b.data_double > 0)
+                return a.data_double / b.data_double;
+            if (a.data_float != null && b.data_float != null && b.data_float > 0)
+                return a.data_float / b.data_float;
+            return 0;
+        }
+
+        public static DataType operator+(DataType a, DataType b)
+        {
+            if (a.data_int != null && b.data_int != null)
+                return a.data_int + b.data_int;
+            if (a.data_double != null && b.data_double != null)
+                return a.data_double + b.data_double;
+            if (a.data_float != null && b.data_float != null)
+                return a.data_float + b.data_float;
+            return 0;
+        }
+
+        public static DataType operator -(DataType a, DataType b)
+        {
+            if (a.data_int != null && b.data_int != null)
+                return a.data_int - b.data_int;
+            if (a.data_double != null && b.data_double != null)
+                return a.data_double - b.data_double;
+            if (a.data_float != null && b.data_float != null)
+                return a.data_float - b.data_float;
+            return 0;
+        }
+
         /*
             Error handling?
-        */ 
-         
+        */
+
     }
 
-    public class MyGenericTypeConversions
-    {
-        public static int data_int;
-        public static double data_double;
-        public static char data_char;
-
-        // assignment constructors
-        public static implicit operator double(MyGenericTypeConversions t)
-        {
-            return data_int;
-        }
-
-        public static implicit operator int(MyGenericTypeConversions t)
-        {
-            return data_int;
-        }
-
-        public static implicit operator char(MyGenericTypeConversions t)
-        {
-            return data_char;
-        }
-
-        public static implicit operator MyGenericTypeConversions(int intVar)
-        {
-            return data_int;
-        }
-
-        public static implicit operator MyGenericTypeConversions(double doubleVar)
-        {
-            return data_double;
-        }
-
-        public static implicit operator MyGenericTypeConversions(char t)
-        {
-            return data_char;
-        }
-    }
-
-    /*
-      This class could be used to handle other things that may be program
-      dependent, or not type dependent. Maybe error handling?
-     */
+    /// <summary>
+    ///     This class could be used to handle other things that may be program
+    ///    dependent, or not type dependent.Maybe error handling?
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class MyGenericType<T> where T : new()//: MyGenericTypeConversions
     {
-        public T data;
-        public dynamic intData;
+        //public T data;
+        public dynamic _data;
 
         public MyGenericType(T t)
         {
-            data = t;
-            if(typeof(T) == typeof(int))
-            {
-                intData = t;
-            }
+            _data = t;
         }
 
-        public static implicit operator MyType(MyGenericType<T> t)
+        public static implicit operator DataType(MyGenericType<T> t)
         {
-            Type typeOfT = typeof(T);
-            if(typeOfT == typeof(int))
-            {
-                return 0;
-                //return new MyType((int)0);
-                //return t.data as MyType;
-            }
-            return new MyType();
+            return new DataType(t._data);
         }
 
         public static implicit operator T(MyGenericType<T> t) 
         {
-            return t.data;
+            return t._data; 
         }
-        
-        public static implicit operator int(MyGenericType<T> t)
+
+        public DataType ToDataType()
         {
-            return 0;
-        }
-        
-        public MyType ToMyType()
-        {
-            return intData;
+            return _data;
         }
 
     }
-
-
 
 }
