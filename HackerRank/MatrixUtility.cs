@@ -7,35 +7,6 @@ using HackerRank;
 
 namespace HackerRank
 {
-    /*
-    public class MatrixUtility
-    {
-        // Dot product for integer data type
-        public static List<int> operator *(Matrix<int> M, List<int> X)
-        {
-            // The number of columns of M must match number of rows (terms) in X
-            if (M.NumberOfColumns() != X.Count())
-            {
-                return null;
-            }
-
-            int rows = M.NumberOfRows();
-            int columns = X.Count();
-            List<int> V_result = new List<int>(columns);
-
-            for (int row_i = 0; row_i < rows; ++row_i)
-            {
-                for (int column_j = 0; column_j < columns; ++column_j)
-                {
-                    V_result[column_j] += M.ValueAt(row_i, column_j) * X[column_j]; //[row_i][column_j] * X[column_j];
-                }
-            }
-
-            return V_result;
-        }
-    }
-    */
-
     public class TypeOperators<T> where T : MyType
     {
         public T data_;
@@ -45,17 +16,6 @@ namespace HackerRank
         public static MyType operator *(TypeOperators<T> a, TypeOperators<T> b)
         {
             return a.data_ * b.data_;
-            /*
-            if (typeof(T) == typeof(int))
-            {
-                //TypeOperators<int> newA = a as TypeOperators<int>;
-                //a.data_int = a.data_;
-                a.data_int = newA.data_int;
-                //return MultiplyThis((int)a.data, (int)b.data);
-                //return MultiplyThis(newA.data_, newA.data_);
-                return a.data_ * b.data_;
-            }
-            */
         }
 
         //public static T MultiplyThis(int a, int b)
@@ -83,15 +43,15 @@ namespace HackerRank
         }
     }
 
-    public class MyType
+    public class MyType 
     {
         private int? data_int;
-        private double? data_double;
-        private char? data_char;
-        public float? data_float;
+        private readonly double? data_double;
+        private readonly char? data_char;
+        public readonly float? data_float;
 
         public MyType() { }
-
+        /*
         public MyType(int intVar)
         {
             data_int = intVar;
@@ -111,19 +71,26 @@ namespace HackerRank
         {
             data_char = charVar;
         }
-
+        *
+        public MyType(MyGenericType<int> g)
+        {
+            data_int = g.data;
+        }
         // implicit conversions to MyType because C# doesn't provide assignment constructors
-
+        /*
         public static implicit operator MyType(char charVar)
         {
             return new MyType(charVar);
         }
-
+        */
         public static implicit operator MyType(int intVar)
         {
-            return new MyType(intVar);
+            MyType temp = new MyType();
+            temp.data_int = intVar;
+            return temp;
+            //return new MyType(intVar);
         }
-
+        /*
         public static implicit operator MyType(float floatVar)
         {
             return new MyType(floatVar);
@@ -134,8 +101,18 @@ namespace HackerRank
             return new MyType(doubleVar);
         }
 
+        public static implicit operator MyType(MyGenericType<int> g)
+        {
+            return new MyType(g.data);
+        }
+        */
         public static implicit operator int?(MyType t)
         {
+            if(t == null)
+            {
+                t = new MyType();
+                return null;
+            }
             return t.data_int;
         }
 
@@ -153,6 +130,25 @@ namespace HackerRank
         {
             return t.data_char;
         }
+
+
+        public override string ToString()
+        {
+            if (data_double != null)
+                return data_double.ToString();
+            if (data_char != null)
+                return data_char.ToString();
+            if (data_int != null)
+                return data_int.ToString();
+            if (data_float != null)
+                return data_float.ToString();
+            return null;
+        }
+
+        /*
+            Error handling?
+        */ 
+         
     }
 
     public class MyGenericTypeConversions
@@ -193,20 +189,53 @@ namespace HackerRank
         }
     }
 
-    public class MyGenericType<T> : MyGenericTypeConversions
+    /*
+      This class could be used to handle other things that may be program
+      dependent, or not type dependent. Maybe error handling?
+     */
+    public class MyGenericType<T> where T : new()//: MyGenericTypeConversions
     {
         public T data;
+        public dynamic intData;
+
+        public MyGenericType(T t)
+        {
+            data = t;
+            if(typeof(T) == typeof(int))
+            {
+                intData = t;
+            }
+        }
+
         public static implicit operator MyType(MyGenericType<T> t)
         {
             Type typeOfT = typeof(T);
             if(typeOfT == typeof(int))
             {
-                return t.data as MyType;
+                return 0;
+                //return new MyType((int)0);
+                //return t.data as MyType;
             }
             return new MyType();
         }
 
+        public static implicit operator T(MyGenericType<T> t) 
+        {
+            return t.data;
+        }
         
+        public static implicit operator int(MyGenericType<T> t)
+        {
+            return 0;
+        }
+        
+        public MyType ToMyType()
+        {
+            return intData;
+        }
+
     }
+
+
 
 }

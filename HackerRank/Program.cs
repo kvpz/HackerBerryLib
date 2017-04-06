@@ -86,9 +86,41 @@ namespace HackerRank
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            Console.WriteLine("Testing MatrixUtility.MyType:\n");
-            MyType myTypeTest = null;
-            Console.WriteLine(myTypeTest.data_float ?? 23425);
+            Matrix<MyType> mat = new Matrix<MyType>(10, 10, 4); //2.323);
+            Matrix<int> matint = new Matrix<int>(10, 10, 24);
+            //List<MyType>.Enumerator l = mat.Begin(1);
+
+            IEnumerator<MyType> l = mat.Begin(1).GetEnumerator();
+            while (l.MoveNext())
+            {
+                Console.WriteLine(l.Current);
+            }
+
+            MyType valueat = mat.ValueAt(34, 23);
+            Console.WriteLine(valueat ?? 32422);
+            Console.WriteLine("NEXT\n\n");
+
+            // testing multiplication between MyTypes
+            MyType m1 = 4;
+            MyType m2 = 5;
+            Console.WriteLine(m1 * m2);
+
+            // Testing if explicit copy constructor works ( it does )
+            Matrix<int> originalMatrix = new Matrix<int>(5, 5, 89);
+            Matrix<int> copyMatrix = new Matrix<int>(ref originalMatrix);
+            foreach(int v in copyMatrix.Begin(1))
+            {
+                Console.WriteLine(v);
+            }
+
+            // testing matrix vector multiplication
+            Matrix<int> MatrixA = new Matrix<int>(3, 3, 2);
+            List<int> VectorX = new List<int>() { 1, 2, 3 };
+            var VectorAX_result = MatrixA * VectorX;
+            foreach(var vertice in VectorAX_result)
+            {
+                Console.WriteLine(vertice);
+            }
 
             stopwatch.Stop();
             Console.WriteLine($"Time: {stopwatch.Elapsed}");
