@@ -3,49 +3,66 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace DijkstraShortestReach
 {
-    public class Pair
-    {
-
-    }
 
     public class GraphUtility
     {
-        public void Dijkstra(int n, int source, List<Tuple<int,int>>[] G, ref List<int> D)
-        //public void Dijkstra(int n, int source, List<List<Tuple<int, int>>> G, ref List<int> D)
+        public static void PrintQueue(SortedSet<Tuple<int,int>>.Enumerator Q)
         {
-            //int infinity = (int)1e9;
-            D[source] = 0;
+            Console.WriteLine();
+            while(Q.MoveNext())
+            {
+                Console.Write($"{Q.Current.Item1} ");
+            }
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Iterative dijkstra.
+        /// </summary>
+        /// <param name="n">The total amount of vertices in the graph.</param>
+        /// <param name="source">The vertice at which the search will start.</param>
+        /// <param name="G">The graph of which will be searched. Each tuple represents the node recieving the edge and the weight.</param>
+        /// <param name="D">A list representing the </param>
+        public void Dijkstra(int n, int source, ref List<Tuple<int, int>>[] G, ref List<int> short_paths)
+        {
+            // Set the shortest path for the node to itself (which is 0).
+            short_paths[source] = 0;
+
+            // Priority Queue as used in DFS to maintain the values of the nodes already visited. Tuple< Distance, FromNode >
             SortedSet<Tuple<int, int>> Q = new SortedSet<Tuple<int, int>>();
+            
+            // Add the distance from the source node to itself.
             Q.Add(Tuple.Create(0, source));
 
-            while(Q.Any())
+            while (Q.Any())
             {
-                var top = Q.GetEnumerator();
+                SortedSet<Tuple<int, int>>.Enumerator top = Q.GetEnumerator();
                 top.MoveNext();
                 int u = top.Current.Item2;
 
                 Q.Remove(top.Current);
 
-                foreach(var next in G[u])
+                foreach (var next in G[u])
                 {
                     int v = next.Item1;
                     int weight = next.Item2;
-                    int new_weight = D[u] + weight;
+                    int new_weight = short_paths[u] + weight;
 
-                    if (new_weight < D[v])
+                    if (new_weight < short_paths[v])
                     {
-                        int tempDv = D[v];
-                        var Qtemp = Q.FirstOrDefault(pred => pred.Item1 == tempDv && pred.Item2 == v);
+                        int tempDv = short_paths[v];
+                        Tuple<int, int> Qtemp = Q.FirstOrDefault(pred => pred.Item1 == tempDv && pred.Item2 == v);
                         if (Qtemp != null && Qtemp != Q.Last())
                         {
-                            Q.RemoveWhere(pred => pred.Item1 == tempDv && pred.Item2 == v);
+                            Q.Remove(Qtemp);
                         }
 
-                        D[v] = new_weight;
-                        Q.Add(Tuple.Create(D[v], v));
+                        short_paths[v] = new_weight;
+                        Q.Add(Tuple.Create(short_paths[v], v));
                     }
                 }
             }
@@ -61,6 +78,8 @@ namespace DijkstraShortestReach
         the other nodes in the graph.
 
         If a node is unreachable, the distance is assumed -1.
+
+        The node values are not "zero-based" so care must be taken to make the array(s) of size N + 1;
     */ 
      
     public class DijkstraShortestReach
@@ -77,10 +96,9 @@ namespace DijkstraShortestReach
                 number_of_edges = Int32.Parse(inputNM[1]);
 
                 List<Tuple<int, int>>[] G = new List<Tuple<int, int>>[number_of_nodes];
-                //List<List<Tuple<int, int>>> G = new List<List<Tuple<int, int>>>(number_of_nodes);
-                //G.ForEach(a => new List<Tuple<int, int>>());
+
                 for (int i = 0; i < number_of_nodes; ++i)
-                    G[i] = new List<Tuple<int, int>>(); //new Tuple<int,int>[number_of_nodes]);
+                    G[i] = new List<Tuple<int, int>>(); 
 
                 for (int edge = 0; edge < number_of_edges; ++edge)
                 {
@@ -101,8 +119,9 @@ namespace DijkstraShortestReach
                     short_paths[si] = (int)1e9;
 
                 GraphUtility graphUtility = new GraphUtility();
-                graphUtility.Dijkstra(number_of_nodes, S, G, ref short_paths);
+                graphUtility.Dijkstra(number_of_nodes, S, ref G, ref short_paths);
 
+                // Printing each shortest distance from S to another node (except for S itself).
                 for(int i = 1; i < number_of_nodes; ++i)
                 {
                     if(i != S)
