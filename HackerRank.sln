@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackerLibrary", "HackerLibr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackerLibrary.Test", "HackerLibrary.Test\HackerLibrary.Test.csproj", "{40261A06-718B-49AB-8C31-4157BA7635B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Playground", "Playground\Playground.csproj", "{7D4DE91A-BE4B-427F-A872-27F9A52FB69A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{40261A06-718B-49AB-8C31-4157BA7635B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40261A06-718B-49AB-8C31-4157BA7635B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40261A06-718B-49AB-8C31-4157BA7635B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D4DE91A-BE4B-427F-A872-27F9A52FB69A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D4DE91A-BE4B-427F-A872-27F9A52FB69A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D4DE91A-BE4B-427F-A872-27F9A52FB69A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D4DE91A-BE4B-427F-A872-27F9A52FB69A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

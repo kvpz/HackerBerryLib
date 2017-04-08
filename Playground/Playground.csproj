@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{868B182C-A9AF-4BA6-BAE3-34F098E2CA75}</ProjectGuid>
+    <ProjectGuid>{7D4DE91A-BE4B-427F-A872-27F9A52FB69A}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>HackerRank</RootNamespace>
-    <AssemblyName>HackerRank</AssemblyName>
+    <RootNamespace>Playground</RootNamespace>
+    <AssemblyName>Playground</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -43,22 +42,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BFSearch.cs" />
-    <Compile Include="Matrix.cs" />
-    <Compile Include="MatrixUtility.cs" />
+    <Compile Include="ConnectedCellsInAGrid.cs" />
+    <Compile Include="CutTheTree.cs" />
+    <Compile Include="DijkstraShortestReach.cs" />
+    <Compile Include="GridLandMetro.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Trie.cs" />
-    <Compile Include="UndirectedGraph.cs" />
+    <Compile Include="SimilarPair.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Input\NoPrefixSet\Input1.txt" />
-    <Content Include="Input\test3.txt" />
-    <Content Include="Output\NoPrefixSet\Output1.txt" />
-    <Content Include="Output\Output3.txt" />
+    <Content Include="InputData\SimilarPairs_Large.txt" />
+    <Content Include="InputData\SimilarPair_Small.txt" />
+    <Content Include="Solutions\SimilarPair\Big.txt" />
+    <Content Include="Solutions\SimilarPair\Small.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

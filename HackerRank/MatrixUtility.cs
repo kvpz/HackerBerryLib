@@ -9,6 +9,13 @@ namespace HackerRank
 {
     public class DataType 
     {
+        public enum CurrentType
+        {
+            Integer = 0,
+            Float = 1,
+            Double = 2
+        }
+
         private double? data_double;
         private int? data_int;
         private char? data_char;
